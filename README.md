@@ -1,2 +1,2 @@
 # lambda-funcs
-Everything λ served here.
+All things λ served here.
