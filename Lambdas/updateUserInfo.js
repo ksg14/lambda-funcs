@@ -1,15 +1,18 @@
-//Lambda to Add an item to DynamoDB Table
-
-var AWS = require('aws-sdk'); // Using aws sdk for node.js
+var AWS = require('aws-sdk');
 var DOC = require('dynamodb-doc');
 var dynamo = new DOC.DynamoDB();
 
 exports.handler = function(event, context) {
-  var item = { email:"something", //item to be added
-               users: event.users || {}
+/*
+    var email_key = event.email;
+    var name_key = event.name;
+    
+  var item = { email:"something",
+                name:"karan"
+              // users: event.users || {}
           };
-
-  var callback = function(err, data) { // callback with error and data objects
+*/
+  var callback = function(err, data) {
     if (err) {
       console.log(err);
       context.fail('unable to update at this time');
@@ -18,6 +21,6 @@ exports.handler = function(event, context) {
       context.done(null, data);
     }
   };
-
-  dynamo.putItem({TableName:"Plug_Users", Item:item}, callback);//Adding item to Table
+//Simply push the received object, need some intelligence in the SPA (the key value pairs must not be nested) works for me right now
+  dynamo.putItem({TableName:"Plug_Users", Item: event}, callback);
 };
