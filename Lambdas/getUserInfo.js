@@ -11,7 +11,7 @@ exports.handler = function(event, context) {
 
         console.log(data.Item);// Remember data is pushed using the Item key as a param of the DynamoDB putItem
       if(data.Item && data.Item.email) {
-        context.done(null, data.Item.name);
+        context.done(null, data.Item.identities[0].access_token); //change it to data.Item afterwards
 
       } else {
         context.done(null, {});//Prints empty object if nothing is contained in Item (<- ironic ?)
@@ -19,5 +19,5 @@ exports.handler = function(event, context) {
     }
   };
 
-  dynamo.getItem({TableName:"Plug_Users", Key:{email:"someKey",name:"some sort key"}}, callback);//params for DB
+  dynamo.getItem({TableName:"Plug_Users", Key:{email:event.email, name: event.name}}, callback);
 };
