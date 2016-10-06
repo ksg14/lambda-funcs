@@ -11,15 +11,15 @@ exports.handler = function(event, context) {
       context.done('Unable to retrieve user information.', null);
     } else {
 
-      var token = data.Item.identities[0].access_token;
+      var token = data.Item.identities[0].access_token;//from DB
 
       var token = token;
 
-      var pages = [];
+      var pages = [];//To be populated with list of permitted pages
 
       var options = { method: 'GET',
       url: "https://graph.facebook.com/v2.6/me/accounts?access_token=" + token,
-      headers: { 'content-type': 'application/json' } };
+      headers: { 'content-type': 'application/json' } };//Graph api call
 
       request(options, function (error, response, body) {
           if (error) throw new Error(error);
@@ -36,7 +36,7 @@ exports.handler = function(event, context) {
           {
               flag = 0;
               for(j=0; j<obj.data[i].perms.length; j++)
-                  {
+                  {//user has to be a creator or editor of content on the page
                       if(obj.data[i].perms[j] == "CREATE_CONTENT" || obj.data[i].perms[j] == "MODERATE_CONTENT")
                           flag++;
                   }
@@ -49,16 +49,10 @@ exports.handler = function(event, context) {
 
           console.log("Pages = " + pages);
 
-          context.done(null,pages);
+          context.done(null,pages);//success callback
       });
-
-
-
-
       }
   };
-
-
-
+  //Mapping template Magic
     dynamo.getItem({TableName:"Plug_Users", Key:{email:event.params.querystring.email, name: event.params.querystring.name}}, callback);
 }
