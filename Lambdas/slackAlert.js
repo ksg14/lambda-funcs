@@ -1,18 +1,18 @@
-function(user, context, callback) {
-  // Rule for slack alert upon authentication
-  if (context.stats.loginsCount > 1) return callback(null, user, context);//checks only for sign up
 
+var slackNotify = function(hook, channel, message) {
 
-  var slack_hook = ' Type your slack hook url ';
+  //var slack_hook = 'https://hooks.slack.com/services/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';
+
+  var slack_hook = hook;
 
   var slack = require('slack-notify')(slack_hook);//acquire slack module
-  var message = 'New User: ' + (user.name || user.email) + ' ( ' + user.identities[0].provider + ': ' + user.time_zone + ' )';
-  var channel = '#random';//slack channel
+  //var channel = '#test_channel';//slack channel
 
   slack.success({
    text: message,
    channel: channel
   });
 
-  callback(null, user, context);
-}
+};
+
+exports.slackNotify = slackNotify;
