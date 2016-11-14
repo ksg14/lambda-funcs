@@ -4,7 +4,7 @@ var DOC = require('dynamodb-doc');
 var dynamo = new DOC.DynamoDB();
 var request = require("request");
 
-console.log('Loading function');
+//console.log('Loading function');
 
 exports.handler = function(event, context)
 {
