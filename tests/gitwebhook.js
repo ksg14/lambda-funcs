@@ -2,6 +2,8 @@ var express = require('express');
 var morgan = require('morgan');
 var http = require('http');
 var bodyParser = require('body-parser');
+var slack = require('./secretVars');
+
 //var slack = require('./slackAlert');
 
 var hostname = "localhost";
@@ -92,7 +94,8 @@ gitRouter.route('/')
 
 
 
-    var slack_hook = 'https://hooks.slack.com/services/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';
+    var slack_hook = slack.slack_hook;
+    //console.log(slack_hook);
     var channel = '#test_channel';//slack channel
     //var message = req.headers.toString();
     //var message = "Event : " + req.headers + " User : " + req.body.sender.login;

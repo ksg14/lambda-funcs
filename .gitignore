@@ -39,3 +39,5 @@ Thumbs.db
 # Directorys
 node_modules/
 
+secretVars.js
+
